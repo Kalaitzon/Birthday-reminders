@@ -1,0 +1,453 @@
+/* ============================================================
+   Γενέθλιο-κατάσταση — φύλλο στυλ
+
+   Η ιδέα: μαργαριτάρι. Ένα σχεδόν λευκό φόντο που δεν είναι
+   επίπεδο — τρεις πολύ αχνές ιριδίζουσες κηλίδες (ρόδινη,
+   γαλάζια, χρυσή) κινούνται αργά κάτω από το περιεχόμενο και
+   δίνουν την αίσθηση φωτός πάνω σε σεντέφι.
+
+   Όλα τα χρώματα ορίζονται ως tokens στο :root, ώστε η σκούρα
+   έκδοση να αλλάζει μόνο τιμές και ποτέ κανόνες.
+   ============================================================ */
+
+:root {
+  /* Περλ επιφάνειες */
+  --pearl-1: #FDFBFC;
+  --pearl-2: #F7F1F5;
+  --sheen-rose: rgba(231, 176, 203, 0.42);
+  --sheen-blue: rgba(174, 198, 236, 0.38);
+  --sheen-gold: rgba(240, 214, 168, 0.40);
+
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-solid: #FFFFFF;
+  --surface-2: #F6F0F4;
+  --border: rgba(163, 130, 154, 0.20);
+  --border-strong: rgba(163, 130, 154, 0.38);
+
+  --ink: #2B2130;
+  --muted: #7A6C7D;
+
+  --accent: #A8467C;
+  --accent-hover: #8E3768;
+  --accent-soft: #F9EDF4;
+  --danger: #C0392B;
+
+  /* Λογότυπο και διακόσμηση */
+  --cake: #E9A9C4;
+  --icing: #FBF2F6;
+  --candle: #9FBCE8;
+  --candle-2: #F0C97D;
+  --flame: #F2A03D;
+  --sprinkle-a: #F0C97D;
+  --sprinkle-b: #9FBCE8;
+  --sprinkle-c: #B78BD4;
+
+  /* Ο τίτλος έχει δικά του χρώματα και όχι τα διακοσμητικά: το γαλάζιο
+     του κεριού είναι υπέροχο σε ένα κεράκι και αδιάβαστο σε γράμματα
+     πάνω σε σχεδόν λευκό φόντο. Και τα τρία εδώ κρατούν αντίθεση. */
+  --title-1: #A8467C;
+  --title-2: #7F46A2;
+  --title-3: #4C5CA6;
+
+  --shadow-sm: 0 1px 2px rgba(72, 45, 66, 0.05);
+  --shadow: 0 2px 4px rgba(72, 45, 66, 0.05), 0 12px 32px -20px rgba(72, 45, 66, 0.30);
+
+  --font: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --display: "Baloo 2", "Nunito", var(--font);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --pearl-1: #171320;
+    --pearl-2: #1E1828;
+    --sheen-rose: rgba(150, 78, 118, 0.30);
+    --sheen-blue: rgba(72, 100, 152, 0.28);
+    --sheen-gold: rgba(150, 116, 62, 0.24);
+
+    --surface: rgba(38, 31, 48, 0.78);
+    --surface-solid: #261F30;
+    --surface-2: #2E2639;
+    --border: rgba(196, 168, 206, 0.16);
+    --border-strong: rgba(196, 168, 206, 0.32);
+
+    --ink: #F0E9F3;
+    --muted: #A99BB0;
+
+    --accent: #EBA0C8;
+    --accent-hover: #F5B9D8;
+    --accent-soft: #35243040;
+    --danger: #F08C82;
+
+    --title-1: #F3ABD0;
+    --title-2: #C9A7F0;
+    --title-3: #A5C3F2;
+
+    --cake: #C97DA0;
+    --icing: #3A2E3C;
+    --shadow: 0 2px 4px rgba(0, 0, 0, 0.35), 0 12px 32px -20px rgba(0, 0, 0, 0.9);
+
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--pearl-1);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ------------------------------------------------------------
+   Το φόντο
+   ------------------------------------------------------------ */
+
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Οι ιριδίζουσες κηλίδες. Δύο στρώσεις που περιστρέφονται πολύ
+   αργά προς αντίθετες κατευθύνσεις — έτσι το μοτίβο δεν
+   επαναλαμβάνεται ορατά. */
+.bg-pearl {
+  position: absolute;
+  inset: -25%;
+  background:
+    radial-gradient(38% 30% at 22% 26%, var(--sheen-rose), transparent 70%),
+    radial-gradient(34% 28% at 78% 32%, var(--sheen-blue), transparent 70%),
+    radial-gradient(42% 34% at 52% 82%, var(--sheen-gold), transparent 72%),
+    linear-gradient(160deg, var(--pearl-1), var(--pearl-2));
+  animation: pearl-drift 48s ease-in-out infinite alternate;
+}
+
+@keyframes pearl-drift {
+  from { transform: translate3d(-2%, -1%, 0) rotate(0deg)  scale(1.04); }
+  to   { transform: translate3d( 2%,  1%, 0) rotate(6deg)  scale(1.12); }
+}
+
+/* Τουρτίτσες, κεράκια, κομφετί */
+.bg-bit {
+  position: absolute;
+  bottom: -12vh;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation-name: float-up;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  user-select: none;
+}
+
+@keyframes float-up {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.5; }
+  50%  { transform: translate3d(var(--drift), -55vh, 0) rotate(180deg); }
+  92%  { opacity: 0.5; }
+  100% { transform: translate3d(0, -118vh, 0) rotate(360deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-pearl { animation: none; }
+  .bg-bit { display: none; }
+  .logo .flames { animation: none; }
+}
+
+/* ------------------------------------------------------------
+   Διάταξη
+   ------------------------------------------------------------ */
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 34px 20px 40px;
+}
+
+/* ------------------------------------------------------------
+   Κεφαλίδα και λογότυπο
+   ------------------------------------------------------------ */
+
+header.app {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+
+.logo { flex: none; filter: drop-shadow(0 3px 6px rgba(168, 70, 124, 0.22)); }
+.logo .flames { transform-origin: center 12px; animation: flicker 2.6s ease-in-out infinite; }
+
+@keyframes flicker {
+  0%, 100% { transform: scaleY(1)    scaleX(1);    opacity: 1; }
+  40%      { transform: scaleY(0.86) scaleX(1.08); opacity: 0.85; }
+  70%      { transform: scaleY(1.07) scaleX(0.94); opacity: 1; }
+}
+
+.brand-text { min-width: 0; }
+
+h1 {
+  font-family: var(--display);
+  font-size: clamp(21px, 4.4vw, 27px);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0;
+  line-height: 1.12;
+  background: linear-gradient(96deg, var(--title-1), var(--title-2) 55%, var(--title-3) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin: 1px 0 0;
+  letter-spacing: 0.005em;
+}
+
+.header-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.who { color: var(--muted); font-size: 12.5px; width: 100%; margin-top: 2px; }
+
+/* Διακόπτης γλώσσας */
+.lang {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--surface);
+  backdrop-filter: blur(8px);
+}
+.lang button {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 5px 11px;
+  cursor: pointer;
+  border-radius: 0;
+}
+.lang button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+
+/* ------------------------------------------------------------
+   Κάρτες
+   ------------------------------------------------------------ */
+
+.card {
+  background: var(--surface);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+h2 {
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  letter-spacing: -0.008em;
+}
+
+/* ------------------------------------------------------------
+   Πεδία
+   ------------------------------------------------------------ */
+
+label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 6px;
+  letter-spacing: 0.015em;
+}
+label .req { color: var(--accent); margin-left: 2px; }
+label .opt { font-weight: 400; opacity: 0.75; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1px solid var(--border-strong);
+  border-radius: 11px;
+  background: var(--surface-solid);
+  color: var(--ink);
+  font: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:hover, select:hover { border-color: var(--accent); }
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 13px; }
+@media (max-width: 580px) { .row { grid-template-columns: 1fr; } }
+
+/* ------------------------------------------------------------
+   Κουμπιά
+   ------------------------------------------------------------ */
+
+button {
+  font: inherit;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 11px;
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.08s;
+}
+button:hover { background: var(--accent-hover); }
+button:active { transform: translateY(1px); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+button.ghost {
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--border-strong);
+}
+button.ghost:hover { background: var(--surface-2); color: var(--ink); }
+
+button.link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  padding: 4px 7px;
+  font-size: 13px;
+}
+button.link:hover { background: var(--accent-soft); }
+button.link.danger { color: var(--danger); }
+
+/* Επιλογή αριθμού ειδοποιήσεων */
+fieldset.modes { border: none; margin: 0 0 14px; padding: 0; }
+fieldset.modes legend {
+  font-size: 12.5px; font-weight: 700; color: var(--muted);
+  padding: 0; margin-bottom: 7px; letter-spacing: 0.015em;
+}
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: 11px;
+  overflow: hidden;
+  background: var(--surface-solid);
+}
+.segmented label {
+  margin: 0; padding: 9px 15px; font-size: 13.5px; font-weight: 700;
+  color: var(--muted); cursor: pointer; display: block;
+  border-right: 1px solid var(--border-strong);
+  transition: background 0.15s, color 0.15s;
+}
+.segmented label:last-child { border-right: none; }
+.segmented label:hover { background: var(--surface-2); }
+.segmented label.on { background: var(--accent); color: #fff; }
+.segmented input { position: absolute; opacity: 0; width: 0; height: 0; }
+.segmented label:focus-within { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+/* ------------------------------------------------------------
+   Λίστα επαφών
+   ------------------------------------------------------------ */
+
+ul.contacts { list-style: none; margin: 0; padding: 0; }
+ul.contacts li {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 6px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 10px;
+  transition: background 0.15s;
+}
+ul.contacts li:hover { background: var(--accent-soft); }
+ul.contacts li:last-child { border-bottom: none; }
+
+.name { font-weight: 700; font-size: 15.5px; }
+.meta { color: var(--muted); font-size: 12.5px; }
+.grow { flex: 1; min-width: 0; }
+
+.badge {
+  font-size: 11px; font-weight: 700; padding: 4px 10px;
+  border-radius: 999px; white-space: nowrap;
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid var(--border);
+}
+
+.bells { font-size: 11px; letter-spacing: -2px; white-space: nowrap; cursor: help; opacity: 0.45; }
+.bells.custom { opacity: 1; }
+
+.countdown {
+  text-align: right; font-size: 12.5px; color: var(--muted);
+  white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.countdown strong { display: block; color: var(--ink); font-size: 14.5px; font-weight: 700; }
+/* Χρειάζεται και το `strong`: σκέτο `.today` έχει μικρότερη
+   προτεραιότητα από το `.countdown strong` και το χρώμα αγνοείται. */
+.countdown strong.today { color: var(--accent); }
+
+/* ------------------------------------------------------------
+   Μηνύματα
+   ------------------------------------------------------------ */
+
+.notice {
+  padding: 11px 15px; border-radius: 11px;
+  background: var(--accent-soft); color: var(--accent);
+  font-size: 14px; margin-bottom: 13px;
+  border: 1px solid var(--border);
+}
+.notice.error { background: rgba(192, 57, 43, 0.09); color: var(--danger); }
+
+/* ------------------------------------------------------------
+   Σύνδεση
+   ------------------------------------------------------------ */
+
+.login { max-width: 400px; margin: 9vh auto 0; }
+.login .brand { justify-content: center; margin-bottom: 6px; }
+.login h1 { text-align: center; }
+.login .tagline { text-align: center; }
+
+.center { text-align: center; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+
+/* ------------------------------------------------------------
+   Υποσέλιδο
+   ------------------------------------------------------------ */
+
+footer.app {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 20px 44px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+footer.app .rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+  margin-bottom: 18px;
+}
+footer.app .copy { margin-top: 8px; opacity: 0.9; }
+footer.app .copy strong { color: var(--ink); font-weight: 700; }
