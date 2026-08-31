@@ -26,7 +26,7 @@ insert into public.relationship_categories (code, label_el, label_en, tier, sort
   ('cousin',        'Ξάδερφος/Ξαδέρφη',    'Cousin',        2, 60),
   ('uncle_aunt',    'Θείος/Θεία',          'Uncle/Aunt',    2, 70),
   ('friend',        'Φίλος/Φίλη',          'Friend',        2, 80),
-  ('family_friend', 'Οικογενειακός φίλος', 'Family friend', 2, 90),
+  ('family_friend', 'Οικογενειακός/ή φίλος/η', 'Family friend', 2, 90),
   ('colleague',     'Συνάδελφος',          'Colleague',     2, 95),
   ('other',         'Άλλο',                'Other',         2, 99)
 on conflict (code) do update
