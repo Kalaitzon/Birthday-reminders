@@ -7,7 +7,7 @@
  */
 
 export type Lang = 'el' | 'en';
-export const DEFAULT_LANG: Lang = 'en';
+export const DEFAULT_LANG: Lang = 'el';
 
 const STORAGE_KEY = 'birthday-lang';
 
