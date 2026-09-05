@@ -1,0 +1,106 @@
+ΓΕΝΕΘΛΙΟΛΟΓΙΟ / BIRTHDAY CALENDAR — PROPRIETARY LICENCE
+
+Copyright (c) 2026 Ioannis Kalaitzidis. All rights reserved.
+
+This repository contains the complete source code of a personal web
+application that stores birthdays and sends email reminders — the React
+front end, the serverless functions, the SQL schema and migrations, the
+configuration and build files, and the accompanying documentation.
+
+Publishing this repository does not place any of it in the public domain and
+does not grant any licence beyond what is stated below.
+
+
+────────────────────────────────────────────────────────────────────────────
+SOURCE CODE
+────────────────────────────────────────────────────────────────────────────
+
+PERMITTED
+
+  1. Reading and studying the source code.
+  2. Quoting short excerpts for commentary, review, teaching or technical
+     discussion, with attribution to the author and a link to this repository.
+  3. Running the application locally for the sole purpose of evaluating it,
+     provided it is not deployed, published or made available to any third
+     party.
+
+NOT PERMITTED without prior written permission
+
+  1. Redistributing the code, in whole or substantial part, as a template,
+     boilerplate or starter project.
+  2. Deploying or hosting the application, publicly or privately, for anyone
+     other than the copyright holder.
+  3. Sublicensing, selling, renting or otherwise transferring rights in it.
+  4. Incorporating the code, or content derived from it, into any commercial
+     product, service, training dataset or publication.
+  5. Removing or altering this notice or any copyright or attribution notice
+     contained in the source files.
+
+
+────────────────────────────────────────────────────────────────────────────
+CONFIGURATION AND CREDENTIALS
+────────────────────────────────────────────────────────────────────────────
+
+No API keys, database credentials or other secrets are contained in this
+repository. Every such value is supplied at runtime through environment
+variables and is deliberately excluded from version control.
+
+Any credentials used by a deployment of this software belong to the person who
+created them and are not covered by any permission granted above.
+
+
+────────────────────────────────────────────────────────────────────────────
+PERSONAL DATA
+────────────────────────────────────────────────────────────────────────────
+
+This application, when deployed, stores personal data about third parties:
+names, dates of birth and, optionally, email addresses of people who are not
+users of the application and who have not necessarily consented to it.
+
+Whoever deploys and operates an instance of this software is the data
+controller for the information it holds, and is solely responsible for
+complying with the General Data Protection Regulation and any other applicable
+data-protection law — including lawful basis, retention, and the rights of the
+people whose birthdays are recorded.
+
+The author of this software is not the controller or processor of data held in
+any deployment other than his own.
+
+
+────────────────────────────────────────────────────────────────────────────
+THIRD-PARTY SERVICES AND DEPENDENCIES
+────────────────────────────────────────────────────────────────────────────
+
+The application is built to run on services operated by third parties —
+including Supabase, Resend and Vercel — and depends on open-source packages
+distributed under their own licences.
+
+Nothing in this licence grants any right in those services or packages. Their
+respective terms apply to them independently, and this licence covers only the
+original work of the author.
+
+
+────────────────────────────────────────────────────────────────────────────
+NO WARRANTY
+────────────────────────────────────────────────────────────────────────────
+
+This software is provided "as is", without warranty of any kind, express or
+implied, including but not limited to the warranties of merchantability,
+fitness for a particular purpose and non-infringement.
+
+In particular, and without limiting the foregoing: no guarantee is made that
+any reminder will be generated, delivered, or delivered on time. Delivery
+depends on scheduling services, email providers, spam filtering and network
+conditions outside the author's control. This software must not be relied upon
+where a missed reminder would matter.
+
+In no event shall the author be liable for any claim, damages or other
+liability arising from, out of or in connection with this software or its use.
+
+
+────────────────────────────────────────────────────────────────────────────
+CONTACT
+────────────────────────────────────────────────────────────────────────────
+
+For permission requests, please contact the copyright holder through the GitHub
+profile associated with this repository.
